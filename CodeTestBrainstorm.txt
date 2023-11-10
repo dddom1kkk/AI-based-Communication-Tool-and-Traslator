@@ -1,0 +1,8 @@
+-Check if all text display screens work (Just displaying text, no translations)
+-Check if text to speech conversion works
+-Check if Speech to text conversion works
+-Check if text to speech -> speech to text has the same output
+-Send the AI: "Translate "the cat" to french and only say the translation"
+    -Check if AI is responding
+    -Check if AI translated "The cat" to "Le chat." in french correctly.
+-Check if changing output language works
