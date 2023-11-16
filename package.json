@@ -1,0 +1,22 @@
+{
+  "name": "ai-based-communication-tool-and-traslator",
+  "version": "1.0.0",
+  "description": "cmpt-276-project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator/issues"
+  },
+  "homepage": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator#readme",
+  "dependencies": {
+    "openai": "^4.19.0"
+  }
+}
