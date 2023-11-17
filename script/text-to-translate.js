@@ -1,0 +1,166 @@
+const apiUrl = "https://api.openai.com/v1/chat/completions";
+const apiKey = "";
+const SystemContent =
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided.";
+const SummarySystemContent =
+  "You will be provided a paragraph, you job is to summarize it into 3-10 points. in the language it was asked in.";
+
+let translatedText =
+  "Dans le marché animé de Jaipur, Rajan, un Indien d'âge moyen passionné par les traditions vibrantes, s'est lancé dans une quête du turban parfait. Guidé par les échos de la culture ancienne, il a navigué à travers les étals ornés de tissus et de teintes riches. Ses yeux brillaient d'anticipation alors qu'il effleurait les plis de soie, chacun racontant une histoire de tradition et de fierté. Après une longue contemplation, il a choisi un turban éclatant safran, symbolisant le courage et le sacrifice. En quittant le marché, le turban couronnait sa tête tel un emblème royal, incarnant non seulement un morceau de tissu, mais aussi un lien précieux avec son patrimoine.";
+let summarrizedText;
+
+let translatedTextWithDetect =
+ "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]" 
+
+let hasBeenSummarized = false;
+
+/**
+ * Sends the request for translation to openAI API and returns translated
+ * text as a string
+ *
+ * @param {string} fromLanguage - The language the user wants to translate from.
+ * @param {string} toLanguage - The language the user wants to translate to.
+ * @param {string} userInput - The text the user wants to translate.
+ *
+ * @return {string} Translated text
+ */
+const getTranslation = async (fromLanguage, toLanguage, userInput) => {
+  // Build the string you want to send to the chatGPT API.
+  // The form is: From: Language1, To: Language2, Sentence: userInput
+  let prompt =
+    "From: " +
+    fromLanguage +
+    ", To: " +
+    toLanguage +
+    ", sentence: " +
+    userInput;
+
+    if (fromLanguage != "Detect Language") {
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + apiKey,
+            },
+        
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              messages: [
+                {
+                  role: "system",
+                  content: SystemContent,
+                },
+                { role: "user", content: prompt },
+              ],
+            }),
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              translatedText = response.choices[0].message.content;
+              showTranslatedText(translatedText);
+              document.getElementById("summaryButton").disabled = false;
+            })
+            .catch((error) => {
+              return error;
+            });
+
+    } else {
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + apiKey,
+            },
+        
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              messages: [
+                {
+                  role: "system",
+                  content: translatedTextWithDetect,
+                },
+                { role: "user", content: prompt },
+              ],
+            }),
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              translatedText = response.choices[0].message.content;
+              translatedText = translatedText.replace(/'/g, '"');
+              translatedText = JSON.parse(translatedText);
+
+              document.getElementById("fromLanguage").value = translatedText[0];
+              showTranslatedText(translatedText[1]);
+              document.getElementById("summaryButton").disabled = false;
+            })
+            .catch((error) => {
+              return error;
+            });
+    }
+
+  
+};
+
+function getSummarization() {
+  // TODO: Check if the paragraph is more than 100 words.
+  let summaryButton = document.getElementById("summaryButton");
+
+  if (hasBeenSummarized == false) {
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + apiKey,
+      },
+
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: SummarySystemContent,
+          },
+          { role: "user", content: translatedText },
+        ],
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        summarrizedText = response.choices[0].message.content;
+        showTranslatedText(translatedText + "\n -----Summary-------\n" + summarrizedText);
+        summaryButton.disabled = "true";
+
+      })
+      .catch((error) => {
+        return error;
+      });
+  } 
+}
+
+/**
+ *
+ * @param {String} translatedText - Translated text from openAI API.
+ */
+function showTranslatedText(translatedText) {
+  let outputArea = document.getElementById("toOutput");
+  document.innerHTML = "";
+
+  outputArea.innerHTML = translatedText;
+}
+
+function translateText() {
+  // Get all the required information from the HTML page.
+  const fromLanguage = document.getElementById("fromLanguage").value;
+  const toLanguage = document.getElementById("toLanguage").value;
+  const userInput = document.getElementById("fromInput").value;
+
+  // TODO: Check if the from language is different from toLanguage.
+  // TODO: Check if the userInput is valid (non-empty, valid language)
+  // TODO: Check if the userInput is the same as last time. DO not allow user to do this.
+  // TODO: Add a reset function that resets all the variables if the text is not the same. 
+
+  // Gets the translatedText from chatGPT using openAI API
+  translatedText = getTranslation(fromLanguage, toLanguage, userInput);
+
+  // Shows the translated text in the HTML page.
+}

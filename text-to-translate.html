@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Text to Translate</title>
-</head>
-<body>
-    This will serve as the text to translate page
-</body>
+    <script src="./script/text-to-translate.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="language-selection-section">
+        <div class="language-selection">
+          <label for="fromLanguage">From Language: </label>
+          <select id="fromLanguage">
+            <option value="Detect Language">Detect Language</option>
+            <option value="English">English</option>
+            <option value="French">French</option>
+          </select>
+        </div>
+
+        <div class="language-selection">
+          <label for="toLanguage">To Language:</label>
+          <select id="toLanguage">
+            <option value="French">French</option>
+            <option value="English">English</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-section">
+        <textarea class="translation-box" id="fromInput"></textarea>
+        <div id="toOutput"></div>
+      </div>
+
+      <button class="app-buttons" onclick="translateText()">Translate</button>
+      <button class="app-buttons" id="summaryButton" onclick="getSummarization()" disabled="true">Summarize</button>
+    </div>
+  </body>
 </html>
