@@ -1,0 +1,22 @@
+{
+  "name": "ai-based-communication-tool-and-traslator",
+  "version": "1.0.0",
+  "description": "[Report_1_pdf](./Milestone_1/CMPT_276_Report.pdf)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator/issues"
+  },
+  "homepage": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
