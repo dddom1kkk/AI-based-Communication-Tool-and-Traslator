@@ -23,6 +23,7 @@ body {
 
 .button {
     border: none;
+    background-color: #bdbdbd;
     color: black;
     /*Text colour*/
     font-weight: bold;
@@ -34,16 +35,6 @@ body {
     margin: 4px 2px;
     cursor: pointer;
 }
-
-.button1 {
-    background-color: #bdbdbd;
-}
-
-
-.button2 {
-    background-color: #bdbdbd;
-}
-
 
 .column {
     float: left;
