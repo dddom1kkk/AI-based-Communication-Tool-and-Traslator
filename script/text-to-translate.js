@@ -12,7 +12,7 @@ let summarrizedText;
 let translatedTextWithDetect =
  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]" 
 
-let hasBeenSummarized = false;
+let hasBeenSummarized = false; 
 
 let previousToLanguage;
 let previousFromLanguage;
