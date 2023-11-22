@@ -140,44 +140,12 @@ async function postWithoutDetect(prompt) {
 }
 
 async function postWithDetect(prompt) {
-  
-  fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + apiKey,
-    },
 
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: translatedTextWithDetect,
-        },
-        { role: "user", content: prompt },
-      ],
-    }),
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      translatedText = response.choices[0].message.content;
-      translatedText = translatedText.replace(/'/g, '"');
-      translatedText = JSON.parse(translatedText);
+  // Array with first element being the detected language and second being the translation. 
+  let translation = ["English", "Hey comment allez-vous?"] 
+  return Promise.resolve(translation);
+  }
 
-      // Set the from language to the one that was detected.
-      document.getElementById("fromLanguage").value = translatedText[0];
-      document.getElementById("summaryButton").disabled = false;
-
-      // Show the translated text on the page.
-      showTranslatedText(translatedText[1]);
-
-      return translatedText;
-    })
-    .catch((error) => {
-      return error;
-    });
-}
 
 /**
  * This functions checks if the text that the user entered is valid.
