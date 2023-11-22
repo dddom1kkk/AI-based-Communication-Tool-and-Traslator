@@ -21,3 +21,9 @@ nav{
 .button2 {
     background-color: #bdbdbd; /*disabled color*/
 }
+
+body{
+    margin: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
