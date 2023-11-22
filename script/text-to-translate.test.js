@@ -1,8 +1,13 @@
-const isEmpty = require("./helperFunctions");
-const areLanguagesSame = require("./helperFunctions");
+// const getTranslation = require("../__mocks__/helperFunctions")
+// const isEmpty = require("../__mocks__/helperFunctions");
+// const areLanguagesSame = require("../__mocks__/helperFunctions");
 
+const { isEmpty, areLanguagesSame, getTranslation} = require("../__mocks__/helperFunctions");
+
+//Unit tests for ChatGPT.
 test("Returns true when user input is empty.", () => {
-    expect(isEmpty("       ")).toBe(false);
+    const empty = isEmpty("    ");
+    expect(empty).toBe(true);
 });
 
 test("Returns false when user input is not empty", () => {
@@ -15,4 +20,26 @@ test("Returns false when languages are different", () => {
 
 test("Returns true when languages are same", () => {
     expect(areLanguagesSame("French", "French")).toBe(true);
+});
+
+// Integration test 1 - This tests Translation function 
+test('integration test for testing the translation function.', async () => {
+    try {
+        const response = await getTranslation("English", "French", "Hey, how are you?");
+        expect(response).toBe('Hey comment allez-vous?');
+    } catch (err) {
+        // Fails the test if there's an error
+        console.log(err);
+    }
+});
+
+// Integration test 1.1 - This tests Translation function if you give the same language
+test('integration test that checks if from and to languages are the same.', async () => {
+    try {
+        const response = await getTranslation("English", "English", "Hey, how are you?");
+        expect(response).toBe('Please pick from language that is different from the language you want to translate to.');
+    } catch (err) {
+        // Fails the test if there's an error
+        console.log(err);
+    }
 });

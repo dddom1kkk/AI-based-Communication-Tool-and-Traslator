@@ -18,5 +18,8 @@
   "homepage": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator#readme",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "jest-fetch-mock": "^3.0.3"
   }
 }

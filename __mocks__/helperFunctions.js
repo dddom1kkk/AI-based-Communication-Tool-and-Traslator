@@ -1,5 +1,8 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
 const apiKey = "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";
+previousFromLanguage = "English";
+previousToLanguage = "French";
+previousUserInput = ""
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided.";
 const SummarySystemContent =
@@ -12,11 +15,44 @@ let summarrizedText;
 let translatedTextWithDetect =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]";
 
-let hasBeenSummarized = false;
 
-let previousToLanguage;
-let previousFromLanguage;
-let previousUserInput;
+/**
+ * This function checks if text that the user entered is empty.
+ * @param {String} userInput - Text that the user put in.
+ * @returns {boolean} - True if the string is empty and false if not.
+ */
+function isEmpty(userInput) {
+  if (userInput == null || userInput.trim() == "") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * Checks if the language the user wants to translate from and the language the
+ * user wants to translate to are different.
+ *
+ * @param {String} fromLanguage - The language the user wants to translate from.
+ * @param {String} toLanguage - The language the user wants to translate to.
+ */
+function areLanguagesSame(fromLanguage, toLanguage) {
+  if (fromLanguage == toLanguage) {
+    return true;
+  }
+  return false;
+};
+
+function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
+  if (
+    userInput == previousUserInput &&
+    fromLanguage == previousFromLanguage &&
+    toLanguage == previousToLanguage
+  ) {
+    return true;
+  }
+  return false;
+};
 
 /**
  * Sends the request for translation to openAI API and returns translated
@@ -39,16 +75,20 @@ const getTranslation = async (fromLanguage, toLanguage, userInput) => {
     ", sentence: " +
     userInput;
 
-  if (isValidInput(userInput, fromLanguage, toLanguage) == true) {
+    isValid = isValidInput(userInput, fromLanguage, toLanguage)
+  if (isValid == true) {
     if (fromLanguage != "Detect Language") {
-      postWithoutDetect(prompt);
+      return await postWithoutDetect(prompt);
     } else {
-      postWithoutDetect(prompt);
+      return await postWithDetect(prompt);
     }
+  } else {
+    return isValid;
   }
 };
 
-function getSummarization() {
+// Integration Tests
+function getSummarization(text) {
   // TODO: Check if the paragraph is more than 100 words.
   let summaryButton = document.getElementById("summaryButton");
 
@@ -73,16 +113,13 @@ function getSummarization() {
     })
       .then((response) => response.json())
       .then((response) => {
-        summarrizedText = response.choices[0].message.content;
-        showTranslatedText(
-          translatedText + "\n -----Summary-------\n" + summarrizedText
-        );
-        summaryButton.disabled = "true";
+        return response.choices[0].message.content;
+
       })
       .catch((error) => {
         return error;
       });
-  }
+  } 
 }
 
 /**
@@ -96,58 +133,14 @@ function showTranslatedText(translatedText) {
   outputArea.innerHTML = translatedText;
 }
 
-function translateText() {
-  // Get all the required information from the HTML page.
-  const fromLanguage = document.getElementById("fromLanguage").value;
-  const toLanguage = document.getElementById("toLanguage").value;
-  const userInput = document.getElementById("fromInput").value;
-
-  // TODO: Check if the from language is different from toLanguage.
-  // TODO: Check if the userInput is valid (non-empty, valid language)
-  // TODO: Check if the userInput is the same as last time. DO not allow user to do this.
-  // TODO: Add a reset function that resets all the variables if the text is not the same.
-
-  // Gets the translatedText from chatGPT using openAI API
-  translatedText = getTranslation(fromLanguage, toLanguage, userInput);
-
-  previousFromLanguage = fromLanguage;
-  previousToLanguage = toLanguage;
-  previousUserInput = userInput;
-
-  // Shows the translated text in the HTML page.
-}
 
 async function postWithoutDetect(prompt) {
-  fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + apiKey,
-    },
+  return Promise.resolve("Hey comment allez-vous?")
 
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: SystemContent,
-        },
-        { role: "user", content: prompt },
-      ],
-    }),
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      translatedText = response.choices[0].message.content;
-      showTranslatedText(translatedText);
-      document.getElementById("summaryButton").disabled = false;
-    })
-    .catch((error) => {
-      return error;
-    });
 }
 
 async function postWithDetect(prompt) {
+  
   fetch(apiUrl, {
     method: "POST",
     headers: {
@@ -178,6 +171,8 @@ async function postWithDetect(prompt) {
 
       // Show the translated text on the page.
       showTranslatedText(translatedText[1]);
+
+      return translatedText;
     })
     .catch((error) => {
       return error;
@@ -191,58 +186,24 @@ async function postWithDetect(prompt) {
  */
 function isValidInput(userInput, fromLanguage, toLanguage) {
   if (isEmpty(userInput) == true) {
-    alert("The text you want to translate can not be empty.");
-    return false;
+    return ("The text you want to translate can not be empty.");
+    //return false;
   }
   if (areLanguagesSame(fromLanguage, toLanguage) == true) {
-    alert(
-      "Please pick from language that is different from the language you want to traslate to."
+    return(
+      "Please pick from language that is different from the language you want to translate to."
     );
-    return false;
+    //return false;
   }
   if (isUserInputTheSame(userInput, fromLanguage, toLanguage) == true) {
-    alert(
+    return(
       "Please ensure that the text you want translated is different from your last."
     );
-    return false;
+    //return false;
   }
 
   return true;
 }
 
-/**
- * This function checks if text that the user entered is empty.
- * @param {String} userInput - Text that the user put in.
- * @returns {boolean} - True if the string is empty and false if not.
- */
-function isEmpty(userInput) {
-  if (userInput == null || userInput.trim() == "") {
-    return true;
-  }
-  return false;
-}
+module.exports = {isEmpty, areLanguagesSame, getTranslation};
 
-/**
- * Checks if the language the user wants to translate from and the language the
- * user wants to translate to are different.
- *
- * @param {String} fromLanguage - The language the user wants to translate from.
- * @param {String} toLanguage - The language the user wants to translate to.
- */
-function areLanguagesSame(fromLanguage, toLanguage) {
-  if (fromLanguage == toLanguage) {
-    return true;
-  }
-  return false;
-}
-
-function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
-  if (
-    userInput == previousUserInput &&
-    fromLanguage == previousFromLanguage &&
-    toLanguage == previousToLanguage
-  ) {
-    return true;
-  }
-  return false;
-}
