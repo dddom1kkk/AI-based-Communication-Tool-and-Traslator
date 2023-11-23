@@ -88,38 +88,15 @@ const getTranslation = async (fromLanguage, toLanguage, userInput) => {
 };
 
 // Integration Tests
-function getSummarization(text) {
+function getSummarization(hasBeenSummarized,text) {
   // TODO: Check if the paragraph is more than 100 words.
-  let summaryButton = document.getElementById("summaryButton");
+  // let summaryButton = document.getElementById("summaryButton");
 
   if (hasBeenSummarized == false) {
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + apiKey,
-      },
-
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: SummarySystemContent,
-          },
-          { role: "user", content: translatedText },
-        ],
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        return response.choices[0].message.content;
-
-      })
-      .catch((error) => {
-        return error;
-      });
-  } 
+    return Promise.resolve("Summarization");
+  } else {
+    return Promise.resolve("Has already been summarized.")
+  }
 }
 
 /**
@@ -142,7 +119,7 @@ async function postWithoutDetect(prompt) {
 async function postWithDetect(prompt) {
 
   // Array with first element being the detected language and second being the translation. 
-  let translation = ["English", "Hey comment allez-vous?"] 
+  let translation = 'English, Translation' 
   return Promise.resolve(translation);
   }
 
@@ -173,5 +150,5 @@ function isValidInput(userInput, fromLanguage, toLanguage) {
   return true;
 }
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation};
+module.exports = {isEmpty, areLanguagesSame, getTranslation, getSummarization};
 

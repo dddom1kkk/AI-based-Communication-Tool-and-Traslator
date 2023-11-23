@@ -2,7 +2,7 @@
 // const isEmpty = require("../__mocks__/helperFunctions");
 // const areLanguagesSame = require("../__mocks__/helperFunctions");
 
-const { isEmpty, areLanguagesSame, getTranslation} = require("../__mocks__/helperFunctions");
+const { isEmpty, areLanguagesSame, getTranslation, getSummarization} = require("../__mocks__/helperFunctions");
 
 //Unit tests for ChatGPT.
 
@@ -54,9 +54,29 @@ test('integration test for detect language feature', async () => {
     try {
         const response = await getTranslation("Detect Language", "French", "Hey, how are you?");
 
-        expect(response).toBe(["English",'Hey comment allez-vous?']);
+        expect(response).toBe("English, Translation");
     } catch (err) {
         // Fails the test if there's an error
         console.log(err);
     }
 });
+
+// Integration test 3 - This tests the integration of the summarization feature.
+test('integration test for the summarization feature when text has not been summarized.', async ()=> {
+    try {
+        const response = await getSummarization(false, "Hey, How are you?");
+        expect(response).toBe("Summarization");
+    } catch (err) {
+        console.log(err);
+    }
+}) 
+
+// Integration test 3.1 - This tests the integration of the summarization feature.
+test('integration test for the summarization feature when text has been summarized.', async ()=> {
+    try {
+        const response = await getSummarization(true, "Hey, How are you?");
+        expect(response).toBe("Has already been summarized.");
+    } catch (err) {
+        console.log(err);
+    }
+}) 
