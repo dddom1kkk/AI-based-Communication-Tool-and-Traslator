@@ -74,9 +74,13 @@ function getSummarization() {
       .then((response) => response.json())
       .then((response) => {
         summarrizedText = response.choices[0].message.content;
+<<<<<<< HEAD
         showTranslatedText(
           translatedText + "\n -----Summary-------\n" + summarrizedText
         );
+=======
+        showTranslatedText(translatedText + "\n \n \n-----Summary-------\n \n" + summarrizedText);
+>>>>>>> develop
         summaryButton.disabled = "true";
       })
       .catch((error) => {
