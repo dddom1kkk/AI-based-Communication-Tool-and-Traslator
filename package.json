@@ -4,7 +4,8 @@
   "description": "[Report_1_pdf](./Milestone_1/CMPT_276_Report.pdf)",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -15,8 +16,9 @@
   "bugs": {
     "url": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator/issues"
   },
-  "homepage": "https://github.com/dddom1kkk/AI-based-Communication-Tool-and-Traslator#readme",
+  "homepage":"https://dddom1kkk.github.io/AI-based-Communication-Tool-and-Traslator",
   "devDependencies": {
+    "gh-pages": "^6.1.0",
     "jest": "^29.7.0"
   },
   "dependencies": {
