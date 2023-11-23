@@ -1,16 +1,16 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "";
+const apiKey = "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";
 const SystemContent =
-  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided.";
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. Do not show the romanized version.";
 const SummarySystemContent =
-  "You will be provided a paragraph, you job is to summarize it into 3-10 points. in the language it was asked in.";
+  "You will be provided a paragraph, you job is to summarize it into 3-10 points. in the language it was asked in. Do not show the romanized version.";
 
 let translatedText =
-  "Dans le marché animé de Jaipur, Rajan, un Indien d'âge moyen passionné par les traditions vibrantes, s'est lancé dans une quête du turban parfait. Guidé par les échos de la culture ancienne, il a navigué à travers les étals ornés de tissus et de teintes riches. Ses yeux brillaient d'anticipation alors qu'il effleurait les plis de soie, chacun racontant une histoire de tradition et de fierté. Après une longue contemplation, il a choisi un turban éclatant safran, symbolisant le courage et le sacrifice. En quittant le marché, le turban couronnait sa tête tel un emblème royal, incarnant non seulement un morceau de tissu, mais aussi un lien précieux avec son patrimoine.";
+  "";
 let summarrizedText;
 
-let translatedTextWithDetect =
-  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]";
+const translatedTextWithDetect =
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]. Do not show the romanized version.";
 
 let hasBeenSummarized = false;
 
