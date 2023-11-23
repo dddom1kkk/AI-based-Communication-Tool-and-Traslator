@@ -1,5 +1,5 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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";
+const apiKey = "";
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided.";
 const SummarySystemContent =
@@ -74,13 +74,7 @@ function getSummarization() {
       .then((response) => response.json())
       .then((response) => {
         summarrizedText = response.choices[0].message.content;
-<<<<<<< HEAD
-        showTranslatedText(
-          translatedText + "\n -----Summary-------\n" + summarrizedText
-        );
-=======
         showTranslatedText(translatedText + "\n \n \n-----Summary-------\n \n" + summarrizedText);
->>>>>>> develop
         summaryButton.disabled = "true";
       })
       .catch((error) => {
