@@ -3,39 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Text to Translate</title>
+    <title>AI Translator</title>
+    <link rel="stylesheet" href="styles/text-to-translate-style.css">
     <script src="./script/text-to-translate.js"></script>
     <script src="./script/helperFunctions.js"></script>
     <script src="./script/text-to-translate.test.js"></script>
   </head>
   <body>
+    <nav>
+      <a href="/AI-based-Communication-Tool-and-Traslator/index.html">
+        <button class="button button1">AI Translator</button>
+      </a>
+      <a href="/AI-based-Communication-Tool-and-Traslator/text-to-translate.html">
+        <button class="button button2" disabled>
+          <img src="/Images/Icon_Type.png" alt="Type Icon" width="25" height="25">
+        </button>   
+      </a>
+      <a href="/AI-based-Communication-Tool-and-Traslator/speak-to-translate.html">
+        <button class="button button1">
+          <img src="/Images/Icon_Speak.png" alt="Speak Icon" width="25" height="25">
+        </button>
+      </a>
+    </nav>
+
     <div class="container">
+      <header>
+        <h1>AI Translator</h1>
+      </header>
+
       <div class="language-selection-section">
         <div class="language-selection">
-          <label for="fromLanguage">From Language: </label>
-          <select id="fromLanguage">
-            <option value="Detect Language">Detect Language</option>
-            <option value="English">English</option>
-            <option value="French">French</option>
+          <select id="fromLanguage" class="language-dropdown">
+            <option value="Detect Language">English</option>
+            <option value="English">French</option>
+              <-- Add more language options here -->
           </select>
-        </div>
-
-        <div class="language-selection">
-          <label for="toLanguage">To Language:</label>
-          <select id="toLanguage">
-            <option value="French">French</option>
-            <option value="English">English</option>
+          <span class="language-arrow">⟶</span>
+          <select id="toLanguage" class="language-dropdown">
+            <option value="French">Punjabi</option>
+            <!-- Add more language options here -->
           </select>
         </div>
       </div>
 
       <div class="text-section">
-        <textarea class="translation-box" id="fromInput"></textarea>
-        <div id="toOutput"></div>
+        <textarea class="translation-box" id="fromInput" placeholder="Type here"></textarea>
+        <textarea class="translation-box" id="toOutput" placeholder="Translation" readonly></textarea>
       </div>
 
-      <button class="app-buttons" onclick="translateText()">Translate</button>
-      <button class="app-buttons" id="summaryButton" onclick="getSummarization()" disabled="true">Summarize</button>
+      <div class="button-section">
+        <button class="app-buttons" onclick="translateText()">Translate</button>
+        <button class="app-buttons" id="summaryButton" onclick="getSummarization()">Summarize</button>
+      </div>
     </div>
   </body>
 </html>
