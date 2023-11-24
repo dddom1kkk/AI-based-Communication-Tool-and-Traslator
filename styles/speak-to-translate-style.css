@@ -111,6 +111,11 @@ body, html {
     display: flex;
     flex-direction: column;
   }
+
+  /* for later edit */
+  #edit {
+    display: none;
+  }
   
   /* Additional styles for nav, footer, etc., can be added here */
   
