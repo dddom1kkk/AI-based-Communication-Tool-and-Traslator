@@ -40,7 +40,8 @@
 
     <div class="container">
       <header>
-        <h1>AI Translator</h1>
+        <h1>AI Speech Translator</h1>
+        <!-- Added "Speech" @dddom1kkk-->
       </header>
 
       <div class="language-selection-section">
@@ -64,6 +65,12 @@
           id="fromInput"
           placeholder="Type here"
         ></textarea>
+        <!-- Added div for center alignment of image & added image itself @dddom1kkk -->
+        <div class="center-record-img">
+          <button class="record-button" onclick="listenText()">
+            <img src="Images/record-button-img.jpg" alt="record-button-image" />
+          </button>
+        </div>
         <textarea
           class="translation-box"
           id="toOutput"

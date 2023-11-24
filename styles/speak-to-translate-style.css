@@ -72,8 +72,24 @@ body, html {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     height: 150px; /* or any other height */
+  }
+
+  .center-record-img {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .record-button {
+    padding: 0;
+    border: none;
+    background: none;
+  }
+
+  .record-button img {
+    border-radius: 50%;
+    width: 40px;
   }
   
   .app-buttons {
