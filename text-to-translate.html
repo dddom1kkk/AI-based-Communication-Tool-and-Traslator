@@ -11,17 +11,17 @@
   </head>
   <body>
     <nav>
-      <a href="/AI-based-Communication-Tool-and-Traslator/index.html">
+      <a href="./AI-based-Communication-Tool-and-Traslator/index.html">
         <button class="button button1">AI Translator</button>
       </a>
-      <a href="/AI-based-Communication-Tool-and-Traslator/text-to-translate.html">
+      <a href="./AI-based-Communication-Tool-and-Traslator/text-to-translate.html">
         <button class="button button2" disabled>
-          <img src="/Images/Icon_Type.png" alt="Type Icon" width="25" height="25">
+          <img src="./Images/Icon_Type.png" alt="Type Icon" width="25" height="25">
         </button>   
       </a>
-      <a href="/AI-based-Communication-Tool-and-Traslator/speak-to-translate.html">
+      <a href="./AI-based-Communication-Tool-and-Traslator/speak-to-translate.html">
         <button class="button button1">
-          <img src="/Images/Icon_Speak.png" alt="Speak Icon" width="25" height="25">
+          <img src="./Images/Icon_Speak.png" alt="Speak Icon" width="25" height="25">
         </button>
       </a>
     </nav>
@@ -36,11 +36,11 @@
           <select id="fromLanguage" class="language-dropdown">
             <option value="Detect Language">English</option>
             <option value="English">French</option>
-              <-- Add more language options here -->
+              <!-- Add more language options here -->
           </select>
           <span class="language-arrow">⟶</span>
           <select id="toLanguage" class="language-dropdown">
-            <option value="French">Punjabi</option>
+            <option value="French">French</option>
             <!-- Add more language options here -->
           </select>
         </div>
@@ -53,7 +53,7 @@
 
       <div class="button-section">
         <button class="app-buttons" onclick="translateText()">Translate</button>
-        <button class="app-buttons" id="summaryButton" onclick="getSummarization()">Summarize</button>
+        <button class="app-buttons" id="summaryButton" onclick="getSummarization()" disabled="true">Summarize</button>
       </div>
     </div>
   </body>

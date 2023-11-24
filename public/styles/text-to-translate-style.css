@@ -75,8 +75,4 @@ body, html {
   /* Additional styles for nav, footer, etc., can be added here */
   
   /* Media queries to make the design responsive can be added here */
-
-  .app-buttons:disabled {
-    background-color: #ccc;
-  }
   

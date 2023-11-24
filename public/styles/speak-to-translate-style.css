@@ -1,0 +1,23 @@
+nav{
+	background: #f0f0f0;
+  	height: 64px;
+  	width:100%;
+}
+
+.button {
+  	float: left;
+    color: black;
+    /*Text colour*/
+    font-weight: bold;
+    padding: 15px 90px;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 28px;
+    cursor: pointer;
+}
+.button1 {
+    background-color: #f0f0f0; /*clickable color*/
+}
+.button2 {
+    background-color: #bdbdbd; /*disabled color*/
+}
