@@ -1,7 +1,10 @@
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
-const SpeechGrammarList =
-  window.SpeechGrammarList || window.webkitSpeechGrammarList;
-const SpeechRecognitionEvent =
-  window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+function showSettings() {
 
+  var settings = document.getElementById("edit");
+
+  if (settings.style.display == "none")
+    settings.style.display = "block";
+  else
+    settings.style.display = "none";
+
+}
