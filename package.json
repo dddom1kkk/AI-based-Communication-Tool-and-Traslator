@@ -19,9 +19,7 @@
   "homepage": "https://dddom1kkk.github.io/AI-based-Communication-Tool-and-Traslator/",
   "devDependencies": {
     "gh-pages": "^6.1.0",
-    "jest": "^29.7.0"
-  },
-  "dependencies": {
+    "jest": "^29.7.0",
     "jest-fetch-mock": "^3.0.3"
   }
 }
