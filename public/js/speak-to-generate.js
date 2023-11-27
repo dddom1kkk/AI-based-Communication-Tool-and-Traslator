@@ -13,6 +13,9 @@ function endSpeechRecognition () {
 }
 
 function resultOfSpeechRecognition (event) {
+
+    // This takes the results that speech recognition event gives and
+    // shows it in the input text as the user is saying words.
     let transcript = Array.from(event.results)
     .map(result => result[0])
     .map(result => result.transcript)
@@ -62,4 +65,14 @@ function isSpeechRecognitionSupported() {
         return false;
     }
 
+}
+
+function listenPlayPause() {
+    let translatedText = document.getElementById("toOutput").value;
+    let rateOfSpeech = document.getElementById("rate").value;
+    const utterance = new SpeechSynthesisUtterance(translatedText);
+    utterance.lang = "fr-FR";
+    utterance.rate = rateOfSpeech;
+
+    window.speechSynthesis.speak(utterance);
 }

@@ -1,12 +1,11 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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";
+const apiKey = "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";
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. Do not show the romanized version.";
 const SummarySystemContent =
   "You will be provided a paragraph, you job is to summarize it into 3-10 points. in the language it was asked in. Do not show the romanized version.";
 
-let translatedText =
-  "";
+let translatedText = "";
 let summarrizedText;
 
 const translatedTextWithDetect =
@@ -43,7 +42,7 @@ const getTranslation = async (fromLanguage, toLanguage, userInput) => {
     if (fromLanguage != "Detect Language") {
       postWithoutDetect(prompt);
     } else {
-      postWithoutDetect(prompt);
+      postWithDetect(prompt);
     }
   }
 };
@@ -74,7 +73,9 @@ function getSummarization() {
       .then((response) => response.json())
       .then((response) => {
         summarrizedText = response.choices[0].message.content;
-        showTranslatedText(translatedText + "\n \n \n-----Summary-------\n \n" + summarrizedText);
+        showTranslatedText(
+          translatedText + "\n \n \n-----Summary-------\n \n" + summarrizedText
+        );
         summaryButton.disabled = "true";
       })
       .catch((error) => {
@@ -139,6 +140,12 @@ async function postWithoutDetect(prompt) {
       translatedText = response.choices[0].message.content;
       showTranslatedText(translatedText);
       document.getElementById("summaryButton").disabled = false;
+
+      // If a play button exists, enable it after recieving translation.
+      if (document.getElementById("play-pause-button")) {
+        let playButton = document.getElementById("play-pause-button");
+        playButton.disabled = false;
+      }
     })
     .catch((error) => {
       return error;
@@ -173,6 +180,11 @@ async function postWithDetect(prompt) {
       // Set the from language to the one that was detected.
       document.getElementById("fromLanguage").value = translatedText[0];
       document.getElementById("summaryButton").disabled = false;
+      // If a play button exists, enable it after recieving translation.
+      if (document.getElementById("play-pause-button")) {
+        let playButton = document.getElementById("play-pause-button");
+        playButton.disabled = false;
+      }
 
       // Show the translated text on the page.
       showTranslatedText(translatedText[1]);
@@ -244,3 +256,5 @@ function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
   }
   return false;
 }
+
+
