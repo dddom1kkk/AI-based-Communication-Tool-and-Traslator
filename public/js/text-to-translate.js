@@ -1,5 +1,5 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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";
+const apiKey = "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";
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. Do not show the romanized version.";
 const SummarySystemContent =
