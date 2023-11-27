@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
-    <link rel="icon" href="/public/favicon.png" type="image/x-icon"> 
     <title>Speak to Translate</title>
+    <link rel="stylesheet" href="./styles/speak-to-translate-style.css">
+    <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css"/>
+    <link rel="icon" href="./favicon.png" type="image/x-icon"> 
+    <script src="./js/languages.js"></script>
+    <script src="./js/text-to-translate.js"></script>
+    <script src="./js/speak-to-generate.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light py-4">
@@ -13,14 +17,14 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav07" aria-controls="nav07" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="/index.html">
-        <img class="img-fluid" src="favicon.png" alt="" width="96"/>
+      <a class="navbar-brand" href="../index.html">
+        <img class="img-fluid" src="./favicon.png" alt="" width="96"/>
       </a>
       <div class="collapse navbar-collapse" id="nav07">
         <ul class="navbar-nav mt-3 mt-lg-0 mb-3 mb-lg-0 ms-lg-3 me-auto">
-          <li class="nav-item me-4"><a class="nav-link active" href="/public/speak-to-translate.html">Speech to Text</a></li>
-          <li class="nav-item me-4"><a class="nav-link" href="/public/text-to-translate.html">Text to Text</a></li>
-          <li class="nav-item me-4"><a class="nav-link" href="/index.html">About</a></li>
+          <li class="nav-item me-4"><a class="nav-link active" href="./speak-to-translate.html">Speech to Text</a></li>
+          <li class="nav-item me-4"><a class="nav-link" href="./text-to-translate.html">Text to Text</a></li>
+          <li class="nav-item me-4"><a class="nav-link" href="../index.html">About</a></li>
         </ul>
       </div>
     </div>
@@ -41,6 +45,13 @@
 
       <div class="text-section">
         <textarea class="translation-box" id="fromInput" placeholder="Type here"></textarea>
+
+        <div class="center-record-img">
+          <button class="record-button" onclick="listenText()">
+            <img src="../Images/record-button-img.jpg" alt="record-button-image" />
+          </button>
+        </div>
+        
         <textarea class="translation-box" id="toOutput" placeholder="Translation" readonly></textarea>
       </div>
 
@@ -67,8 +78,5 @@
       </div>
     </div>
   </footer>
-
-  <script src="scripts/speak-to-translate.js"></script>
-  <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
