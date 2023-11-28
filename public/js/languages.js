@@ -11,18 +11,22 @@ function createOptionsForLanguagesDropdown() {
   let fromDropdown = document.getElementById("fromLanguage");
   let toDropdown = document.getElementById("toLanguage");
 
+
   for (language in languages) {
-    let langValue = languages[language];
+
+    let fullString = separateLanguageAndCode(languages[language])
+    let langValue = fullString[0];
+    let displayName = fullString[1];
 
     // Create the option for the from language.
     let newFromLanguage = document.createElement("option");
     newFromLanguage.value = langValue;
-    newFromLanguage.innerHTML = langValue;
+    newFromLanguage.innerHTML = displayName;
 
     // Create the option for the to language.
     let newToLanguage = document.createElement("option");
     newToLanguage.value = langValue;
-    newToLanguage.innerHTML = langValue;
+    newToLanguage.innerHTML = displayName;
 
     fromDropdown.append(newFromLanguage);
     toDropdown.appendChild(newToLanguage);
@@ -33,146 +37,47 @@ function createOptionsForLanguagesDropdown() {
 window.onload = createOptionsForLanguagesDropdown;
 
 var languages = [
-  "English",
-  "French",
-  "Punjabi",
-  "Afrikaans",
-  "Albanian",
-  "Arabic",
-  "Armenian",
-  "Assamese",
-  "Azerbaijani",
-  "Basque",
-  "Belarusian",
-  "Bengali",
-  "Bosnian",
-  "Bulgarian",
-  "Burmese",
-  "Catalan",
-  "Chinese",
-  "Croatian",
-  "Czech",
-  "Danish",
-  "Dutch",
-  "Estonian",
-  "Farsi",
-  "Filipino",
-  "Finnish",
-  "Galician",
-  "Georgian",
-  "German",
-  "Greek",
-  "Gujarati",
-  "Haitian Creole",
-  "Hausa",
-  "Hebrew",
-  "Hindi",
-  "Hmong",
-  "Hungarian",
-  "Icelandic",
-  "Igbo",
-  "Indonesian",
-  "Irish",
-  "Italian",
-  "Japanese",
-  "Javanese",
-  "Kannada",
-  "Kazakh",
-  "Khmer",
-  "Kinyarwanda",
-  "Korean",
-  "Kurdish",
-  "Kyrgyz",
-  "Lao",
-  "Latvian",
-  "Lithuanian",
-  "Luxembourgish",
-  "Macedonian",
-  "Malagasy",
-  "Malay",
-  "Malayalam",
-  "Maltese",
-  "Maori",
-  "Marathi",
-  "Mongolian",
-  "Nepali",
-  "Norwegian",
-  "Oriya",
-  "Oromo",
-  "Pashto",
-  "Persian",
-  "Polish",
-  "Portuguese",
-  "Romanian",
-  "Russian",
-  "Samoan",
-  "Scots Gaelic",
-  "Serbian",
-  "Sesotho",
-  "Shona",
-  "Sindhi",
-  "Sinhala",
-  "Somali",
-  "Spanish",
-  "Sundanese",
-  "Swahili",
-  "Swedish",
-  "Tagalog",
-  "Tajik",
-  "Tamil",
-  "Tatar",
-  "Telugu",
-  "Thai",
-  "Tigrinya",
-  "Tongan",
-  "Turkish",
-  "Ukrainian",
-  "Urdu",
-  "Uzbek",
-  "Vietnamese",
-  "Welsh",
+  "en-US English",
+  "fr-FR French",
+  "es-MX Spanish",
+  "hi-IN Hindi",
+  "ja-JP Japanese",
+  "ar-SA Arabic",
+  "cs-CZ Czech",
+  "da-DK Danish",
+  "de-DE German",
+  "el-GR Modern Greek",
+  "fi-FI Finnish",
+  "he-IL Hebrew",
+  "hu-HU Hungarian",
+  "id-ID Indonesian",
+  "it-IT Italian",
+  "ko-KR Korean",
+  "nl-NL Dutch",
+  "no-NO Norwegian",
+  "pl-PL Polish",
+  "pt-BR Portuguese",
+  "pt-PT Portuguese",
+  "ro-RO Romanian",
+  "ru-RU Russian",
+  "sk-SK Slovak",
+  "sv-SE Swedish",
+  "th-TH Thai",
+  "tr-TR Turkish",
+  "zh-CN Chinese (China)",
+  "zh-HK Chinese (Hong Kong)",
+  "zh-TW Chinese (Taiwan)"
 ];
 
-function createOptionsForLanguagesDropdown() {
-  [
-    "en-English",
-    "fr-French",
-    "es-Spanish",
-    "hi-Hindi",
-    "ar-Arabic",
-    "cs-Czech",
-    "da-Danish",
-    "de-German",
-    "el-Greek",
-    "eo-Esperanto",
-    "et-Estonian",
-    "fi-Finnish",
-    "he-Hebrew",
-    "hu-Hungarian",
-    "id-Indonesian",
-    "it-Italian",
-    "ja-Japanese",
-    "ko-Korean",
-    "la-Latin",
-    "lt-Lithuanian",
-    "lv-Latvian",
-    "nb-Norwegian Bokmal",
-    "nl-Dutch",
-    "nn-Norwegian Nynorsk",
-    "no-Norwegian",
-    "pl-Polish",
-    "pt-Portuguese",
-    "ro-Romanian",
-    "ru-Russian",
-    "sk-Slovak",
-    "sl-Slovenian",
-    "sq-Albanian",
-    "sr-Serbian",
-    "sv-Swedish",
-    "th-Thai",
-    "tr-Turkish",
-    "zh-Chinese",
-  ];
+/**
+ * This function sperates the code and the language and returns them as an array
+ * [code, language].
+ * @param {String} languageString 
+ * @returns 
+ */
+function separateLanguageAndCode(languageString) {
+  let parts = languageString.split(' ');
+  let code = parts.shift(); // Remove and get the language code
+  let language = parts.join(' '); // Get the remaining part as language
+  return [code, language];
 }
-
-
