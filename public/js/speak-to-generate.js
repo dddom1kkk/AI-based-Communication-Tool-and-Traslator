@@ -45,6 +45,14 @@ if (isSpeechRecognitionSupported()) {
 function listenText() {
     if (!isListening) {
         // Start listening to speech. 
+        let fromLang = document.getElementById("fromLanguage").value;
+        if (fromLang == "Detect Language") {
+            SpeechRecognition.lang = "en-US";
+        }
+        else {
+            SpeechRecognition.lang = fromLang;
+        }
+
         SpeechRecognition.start();
 
     } else {
@@ -71,7 +79,7 @@ function listenPlayPause() {
     let translatedText = document.getElementById("toOutput").value;
     let rateOfSpeech = document.getElementById("rate").value;
     const utterance = new SpeechSynthesisUtterance(translatedText);
-    utterance.lang = "fr-FR";
+    utterance.lang = document.getElementById("toLanguage").value;
     utterance.rate = rateOfSpeech;
 
     window.speechSynthesis.speak(utterance);
