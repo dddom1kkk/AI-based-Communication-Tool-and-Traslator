@@ -1,5 +1,5 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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";
+const apiKey = "";
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. Do not show the romanized version.";
 const SummarySystemContent =
@@ -9,7 +9,7 @@ let translatedText = "";
 let summarrizedText;
 
 const translatedTextWithDetect =
-  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [language, translation]. Do not show the romanized version.";
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [from_language, translation]. Do not show the romanized version. and make sure the first letter of language is capitalized.";
 
 let hasBeenSummarized = false;
 
@@ -178,7 +178,9 @@ async function postWithDetect(prompt) {
       translatedText = JSON.parse(translatedText);
 
       // Set the from language to the one that was detected.
-      document.getElementById("fromLanguage").value = translatedText[0];
+      let fromLangInput = document.getElementById("fromLanguage")
+      fromLangInput.value = translatedText[0].toString();
+
       document.getElementById("summaryButton").disabled = false;
       // If a play button exists, enable it after recieving translation.
       if (document.getElementById("play-pause-button")) {
