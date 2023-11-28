@@ -2,7 +2,7 @@
 // const isEmpty = require("../__mocks__/helperFunctions");
 // const areLanguagesSame = require("../__mocks__/helperFunctions");
 
-const { isEmpty, areLanguagesSame, getTranslation} = require("../__mocks__/helperFunctions");
+const { isEmpty, areLanguagesSame, getTranslation} = require("../../__mocks__/helperFunctions");
 
 //Unit tests for ChatGPT.
 

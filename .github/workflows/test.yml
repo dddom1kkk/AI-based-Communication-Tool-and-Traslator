@@ -3,9 +3,7 @@
 
 name: test
 
-on: 
-  pull_request:
-    branches: [ "CodeTests" ]
+on: pull_request
 
 jobs:
   build:
@@ -27,4 +25,3 @@ jobs:
       run: npm ci
     - name: tests
       run: npm test
-
