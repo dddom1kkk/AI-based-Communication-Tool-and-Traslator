@@ -1,5 +1,14 @@
 function createOptionsForLanguagesDropdown(){
 
+  let rate = document.getElementById("rate");
+  let rateText = document.getElementById("rate-text");
+
+if (rate) {
+  rate.addEventListener("input", (event) => {
+    rateText.innerHTML = "Speed(" + event.target.value + ")";
+  })
+}
+
   let fromDropdown = document.getElementById("fromLanguage");
   let toDropdown = document.getElementById("toLanguage");
 

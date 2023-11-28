@@ -50,6 +50,13 @@
           <button class="record-button" onclick="listenText()">
             <img src="../Images/record-button-img.jpg" alt="record-button-image" />
           </button>
+          <button id="play-pause-button" onclick="listenPlayPause()" disabled="true">
+          <img src="../Images/play-icon.png" alt="play-button-image">
+        </button>
+        <div id="rate-control">
+          <label id="rate-text">Speed(1):</label>
+          <input type="range" min="0.5" max="2" value="1" step="0.1" id="rate">
+        </div>
         </div>
         
         <textarea class="translation-box" id="toOutput" placeholder="Translation" readonly></textarea>
