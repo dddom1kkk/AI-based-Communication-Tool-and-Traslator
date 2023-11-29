@@ -19,18 +19,30 @@ function createOptionsForLanguagesDropdown() {
     let displayName = fullString[1];
 
     // Create the option for the from language.
-    let newFromLanguage = document.createElement("option");
-    newFromLanguage.value = langValue;
-    newFromLanguage.innerHTML = displayName;
+    let newFromLanguage = createOptionElement(langValue, displayName);
 
     // Create the option for the to language.
-    let newToLanguage = document.createElement("option");
-    newToLanguage.value = langValue;
-    newToLanguage.innerHTML = displayName;
+    let newToLanguage = createOptionElement(langValue, displayName);
 
     fromDropdown.append(newFromLanguage);
     toDropdown.appendChild(newToLanguage);
   }
+}
+
+/**
+ * Create a options element that can be appended to the language dropdown menu.
+ * 
+ * @param {String} langValue 
+ * @param {String} displayName 
+ */
+function createOptionElement(langValue, displayName) {
+      // Create the option for the from language.
+      let languageOption = document.createElement("option");
+      languageOption.value = langValue;
+      languageOption.innerHTML = displayName;
+
+      return languageOption
+
 }
 
 // Runs the create options function once the DOM has loaded.

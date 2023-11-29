@@ -2,7 +2,7 @@
 // const isEmpty = require("../__mocks__/helperFunctions");
 // const areLanguagesSame = require("../__mocks__/helperFunctions");
 
-const { isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode} = require("../../__mocks__/helperFunctions");
+const { isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement} = require("../../__mocks__/helperFunctions");
 
 //Unit tests for ChatGPT.
 
@@ -27,14 +27,24 @@ test("Returns true when languages are same", () => {
     expect(areLanguagesSame("French", "French")).toBe(true);
 });
 
+// Unit test 5
 test('separateLanguageAndCode correctly separates language code and name', () => {
     const languageString = 'hi-IN Hindi';
-    // Act
     const result = separateLanguageAndCode(languageString);
-
-    // Assert
     expect(result).toEqual(['hi-IN', 'Hindi']);
 });
+
+// Unit test 6
+test("createOptionElement correctly creates a 'options' element with the right display name and value", ()=> {
+    const displayName = "French";
+    const languageCode = "fr-FR";
+    
+    const optionElement = createOptionElement("fr-FR", "French");
+
+    expect(optionElement.nodeName).toBe("OPTION");
+    expect(optionElement.innerHTML).toBe("French");
+    expect(optionElement.value).toBe("fr-FR");
+})
 
 // Integration test 1 - This tests Translation function 
 test('integration test for testing the translation function.', async () => {

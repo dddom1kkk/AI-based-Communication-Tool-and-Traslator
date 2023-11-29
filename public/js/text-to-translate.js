@@ -248,6 +248,13 @@ function areLanguagesSame(fromLanguage, toLanguage) {
   return false;
 }
 
+/**
+ * 
+ * @param {String} userInput 
+ * @param {String} fromLanguage 
+ * @param {String} toLanguage 
+ * @returns 
+ */
 function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
   if (
     userInput == previousUserInput &&

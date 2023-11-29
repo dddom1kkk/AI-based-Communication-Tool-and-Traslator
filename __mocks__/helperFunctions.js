@@ -134,6 +134,7 @@ function showTranslatedText(translatedText) {
 }
 
 
+
 async function postWithoutDetect(prompt) {
   return Promise.resolve("Hey comment allez-vous?")
 
@@ -186,4 +187,38 @@ function separateLanguageAndCode(languageString) {
   return [code, language];
 }
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode};
+/**
+ * Create a options element that can be appended to the language dropdown menu.
+ * 
+ * @param {String} langValue 
+ * @param {String} displayName 
+ */
+function createOptionElement(langValue, displayName) {
+  // Create the option for the from language.
+  let languageOption = document.createElement("option");
+  languageOption.value = langValue;
+  languageOption.innerHTML = displayName;
+
+  return languageOption
+
+}
+
+// /**
+//  * 
+//  * @param {String} userInput 
+//  * @param {String} fromLanguage 
+//  * @param {String} toLanguage 
+//  * @returns 
+//  */
+// function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
+//   if (
+//     userInput == previousUserInput &&
+//     fromLanguage == previousFromLanguage &&
+//     toLanguage == previousToLanguage
+//   ) {
+//     return true;
+//   }
+//   return false;
+// }
+
+module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement};
