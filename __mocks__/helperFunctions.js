@@ -173,4 +173,17 @@ function isValidInput(userInput, fromLanguage, toLanguage) {
   return true;
 }
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation};
+/**
+ * This function sperates the code and the language and returns them as an array
+ * [code, language].
+ * @param {String} languageString 
+ * @returns 
+ */
+function separateLanguageAndCode(languageString) {
+  let parts = languageString.split(' ');
+  let code = parts.shift(); // Remove and get the language code
+  let language = parts.join(' '); // Get the remaining part as language
+  return [code, language];
+}
+
+module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode};

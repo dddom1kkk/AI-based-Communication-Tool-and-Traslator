@@ -2,7 +2,7 @@
 // const isEmpty = require("../__mocks__/helperFunctions");
 // const areLanguagesSame = require("../__mocks__/helperFunctions");
 
-const { isEmpty, areLanguagesSame, getTranslation} = require("../../__mocks__/helperFunctions");
+const { isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode} = require("../../__mocks__/helperFunctions");
 
 //Unit tests for ChatGPT.
 
@@ -25,6 +25,15 @@ test("Returns false when languages are different", () => {
 // Unit test 4
 test("Returns true when languages are same", () => {
     expect(areLanguagesSame("French", "French")).toBe(true);
+});
+
+test('separateLanguageAndCode correctly separates language code and name', () => {
+    const languageString = 'hi-IN Hindi';
+    // Act
+    const result = separateLanguageAndCode(languageString);
+
+    // Assert
+    expect(result).toEqual(['hi-IN', 'Hindi']);
 });
 
 // Integration test 1 - This tests Translation function 
@@ -54,7 +63,7 @@ test('integration test for detect language feature', async () => {
     try {
         const response = await getTranslation("Detect Language", "French", "Hey, how are you?");
 
-        expect(response).toBe(["English",'Hey comment allez-vous?']);
+        expect(response).toEqual(["English",'Hey comment allez-vous?']);
     } catch (err) {
         // Fails the test if there's an error
         console.log(err);
