@@ -203,22 +203,26 @@ function createOptionElement(langValue, displayName) {
 
 }
 
-// /**
-//  * 
-//  * @param {String} userInput 
-//  * @param {String} fromLanguage 
-//  * @param {String} toLanguage 
-//  * @returns 
-//  */
-// function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
-//   if (
-//     userInput == previousUserInput &&
-//     fromLanguage == previousFromLanguage &&
-//     toLanguage == previousToLanguage
-//   ) {
-//     return true;
-//   }
-//   return false;
-// }
+/**
+ * 
+ * @param {String} userInput 
+ * @param {String} fromLanguage 
+ * @param {String} toLanguage 
+ * @returns 
+ */
+function isUserInputSame(userInput, fromLanguage, toLanguage) {
+  const previousUserInput = "hi";
+  const previousFromLanguage = "French";
+  const previousToLanguage = "English";
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement};
+  if (
+    userInput == previousUserInput &&
+    fromLanguage == previousFromLanguage &&
+    toLanguage == previousToLanguage
+  ) {
+    return true;
+  }
+  return false;
+}
+
+module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame};
