@@ -225,5 +225,119 @@ function isUserInputSame(userInput, fromLanguage, toLanguage) {
   return false;
 }
 
+let isListening;
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame, showTranslatedText};
+function startSpeechRecognition () {
+    console.log("Active");
+    isListening = true;
+   }
+
+function endSpeechRecognition () {
+    console.log("Ended");
+    isListening = false;
+}
+
+function resultOfSpeechRecognition (event) {
+
+    // This takes the results that speech recognition event gives and
+    // shows it in the input text as the user is saying words.
+    let transcript = Array.from(event.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+    let inputTextBox = document.getElementById("fromInput");
+    inputTextBox.value = transcript;
+}
+
+// Check if the browser supports speech recognition.    
+if (isSpeechRecognitionSupported()) {
+  //  SpeechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); 
+  //  inputTextBox = document.getElementById("fromInput");
+
+  //  SpeechRecognition.interimResults = true;
+
+  //  SpeechRecognition.onstart = startSpeechRecognition;
+
+  //  SpeechRecognition.onend = endSpeechRecognition;
+
+  //  SpeechRecognition.onresult = resultOfSpeechRecognition;
+
+    
+} else {
+    console.log("Sorry, your browser does not support speech recognition.")
+}
+
+function listenText() {
+    if (!isListening) {
+        // Start listening to speech. 
+        let fromLang = "French";
+        if (fromLang == "Detect Language") {
+            // SpeechRecognition.lang = "en-US";
+        }
+        else {
+            // SpeechRecognition.lang = fromLang;
+        }
+        let speechRecog = new SpeechRecognition()
+        speechRecog.start();
+
+    } else {
+        // Stop listening to speech.
+        SpeechRecognition.stop();
+    }
+
+}
+
+/**
+ * Checks if speech recognition is supported by the browser or not. 
+ */
+function isSpeechRecognitionSupported() {
+    // const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+    // if (SpeechRecognition) {
+    //     return false;
+    // } else {
+    //     return true;
+    // }
+
+    return true;
+}
+
+function listenPlayPause() {
+    // let translatedText = document.getElementById("toOutput").value;
+    // let rateOfSpeech = document.getElementById("rate").value;
+    let rateOfSpeech = 2.0;
+    const utterance = new SpeechSynthesisUtterance();
+    utterance.lang = document.getElementById("toLanguage").value;
+    utterance.rate = rateOfSpeech;
+
+    window.speechSynthesis.speak(utterance);
+}
+
+class SpeechRecognition {
+  constructor() {
+    this.isListening = false;
+  }
+
+  start() {
+    console.log("Speech recognition started");
+    this.isListening = true;
+  }
+
+  stop() {
+    console.log("Speech recognition stopped");
+    this.isListening = false;
+  }
+
+  // Other methods or properties can be added as needed
+}
+
+class SpeechSynthesisUtterance{
+  constructor(text = '') {
+    this.text = text;
+    this.lang = 'en-US';
+    this.rate = 1.0;
+  }
+}
+
+
+
+module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame, showTranslatedText, listenPlayPause, SpeechRecognition, SpeechSynthesisUtterance};
