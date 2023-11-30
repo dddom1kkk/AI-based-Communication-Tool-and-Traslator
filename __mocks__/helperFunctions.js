@@ -225,4 +225,5 @@ function isUserInputSame(userInput, fromLanguage, toLanguage) {
   return false;
 }
 
-module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame};
+
+module.exports = {isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame, showTranslatedText};

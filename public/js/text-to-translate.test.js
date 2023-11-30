@@ -2,7 +2,7 @@
 // const isEmpty = require("../__mocks__/helperFunctions");
 // const areLanguagesSame = require("../__mocks__/helperFunctions");
 
-const { isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame} = require("../../__mocks__/helperFunctions");
+const { isEmpty, areLanguagesSame, getTranslation, separateLanguageAndCode, createOptionElement, isUserInputSame, showTranslatedText} = require("../../__mocks__/helperFunctions");
 
 //Unit tests for ChatGPT.
 
@@ -50,7 +50,24 @@ test("createOptionElement correctly creates a 'options' element with the right d
 test("Check if the userInput is the same from the last time they pressed the 'translate button", () => {
     
     expect(isUserInputSame("hi", "French", "English")).toBe(true);
-}) 
+});
+
+document.body.innerHTML = '<div id="toOutput"></div>';
+
+// Unit test 8 - showTranslatedText
+test("showTranslatedText correctly displays translated text in the output area", () => {
+  // Sample translated text
+  const translatedText = "This is a sample translated text.";
+
+  // Call the showTranslatedText function with the sample translated text
+  showTranslatedText(translatedText);
+
+  // Expect the output area to have the correct innerHTML
+  const outputArea = document.getElementById("toOutput");
+  expect(outputArea.innerHTML).toBe(translatedText);
+});
+
+
 
 
 // Integration test 1 - This tests Translation function 
