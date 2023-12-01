@@ -43,6 +43,7 @@
     "sass": "^1.43.4"
   },
   "dependencies": {
-    "jest-fetch-mock": "^3.0.3"
+    "jest-fetch-mock": "^3.0.3",
+    "express": "^4.17.1"
   }
 }
