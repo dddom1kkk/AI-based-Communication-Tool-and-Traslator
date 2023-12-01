@@ -1,62 +1,86 @@
-// speak-to-translate.js
 
-const startButton = document.getElementById('start-recording');
-const transcriptDiv = document.getElementById('transcript');
-const translationDiv = document.getElementById('translation');
+let SpeechRecognition;
+let isListening;
 
-// Function to start recording speech
-function startSpeechRecognition() {
-    const recognition = new webkitSpeechRecognition();
-    recognition.lang = 'en-US'; // Set this to the language you want to recognize
-    recognition.onresult = (event) => {
-        const speechToText = event.results[0][0].transcript;
-        transcriptDiv.textContent = `Transcription: ${speechToText}`;
-        sendToWhisper(speechToText);
-    };
-    recognition.start();
+function startSpeechRecognition () {
+    console.log("Active");
+    isListening = true;
+   }
+
+function endSpeechRecognition () {
+    console.log("Ended");
+    isListening = false;
 }
 
-// Function to send the speech text to the Whisper API endpoint
-function sendToWhisper(speechText) {
-    // This URL is a placeholder; you'll need to replace it with your actual Whisper API endpoint
-    const whisperApiUrl = 'https://your-whisper-api-endpoint.com/transcribe';
+function resultOfSpeechRecognition (event) {
 
-    fetch(whisperApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ speech: speechText })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const transcribedText = data.transcription;
-        translateText(transcribedText, 'es'); // Replace 'es' with the target language code
-    })
-    .catch(error => console.error('Error with Whisper API:', error));
+    // This takes the results that speech recognition event gives and
+    // shows it in the input text as the user is saying words.
+    let transcript = Array.from(event.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+    let inputTextBox = document.getElementById("fromInput");
+    inputTextBox.value = transcript;
 }
 
-// Function to translate text using a translation API
-function translateText(text, targetLanguage) {
-    // This URL and key are placeholders; replace them with your actual translation API endpoint and key
-    const translationApiUrl = 'https://your-translation-api-endpoint.com/translate';
-    const apiKey = 'YOUR_TRANSLATION_API_KEY';
+// Check if the browser supports speech recognition.    
+if (isSpeechRecognitionSupported()) {
+   SpeechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); 
+   inputTextBox = document.getElementById("fromInput");
 
-    fetch(translationApiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            text: text,
-            targetLanguage: targetLanguage
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        translationDiv.textContent = `Translation: ${data.translatedText}`;
-    })
-    .catch(error => console.error('Error with Translation API:', error));
+   SpeechRecognition.interimResults = true;
+
+   SpeechRecognition.onstart = startSpeechRecognition;
+
+   SpeechRecognition.onend = endSpeechRecognition;
+
+   SpeechRecognition.onresult = resultOfSpeechRecognition;
+
+    
+} else {
+    alert("Sorry, your browser does not support speech recognition.")
 }
 
-// Event listener for the start button
-startButton.addEventListener('click', startSpeechRecognition);
+function listenText() {
+    if (!isListening) {
+        // Start listening to speech. 
+        let fromLang = document.getElementById("fromLanguage").value;
+        if (fromLang == "Detect Language") {
+            SpeechRecognition.lang = "en-US";
+        }
+        else {
+            SpeechRecognition.lang = fromLang;
+        }
+
+        SpeechRecognition.start();
+
+    } else {
+        // Stop listening to speech.
+        SpeechRecognition.stop();
+    }
+
+}
+
+/**
+ * Checks if speech recognition is supported by the browser or not. 
+ */
+function isSpeechRecognitionSupported() {
+    const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+function listenPlayPause() {
+    let translatedText = document.getElementById("toOutput").value;
+    let rateOfSpeech = document.getElementById("rate").value;
+    const utterance = new SpeechSynthesisUtterance(translatedText);
+    utterance.lang = document.getElementById("toLanguage").value;
+    utterance.rate = rateOfSpeech;
+
+    window.speechSynthesis.speak(utterance);
+}
