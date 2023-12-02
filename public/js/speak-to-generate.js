@@ -1,7 +1,7 @@
 const socket = io.connect('https://big-smart-society.glitch.me');
 
 socket.on('transcription', (transcribedText) => {
-    document.getElementById('textOutput').innerText = transcribedText;
+    document.getElementById('fromInput').innerText = transcribedText;
 });
 
 socket.on('transcriptionError', (error) => {
