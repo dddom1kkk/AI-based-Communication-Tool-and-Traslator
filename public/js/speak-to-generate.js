@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         audioContext = new AudioContext();
         mediaStream = stream;
 
-        audioContext.audioWorklet.addModule('audio-processor.js').then(() => {
+        audioContext.audioWorklet.addModule('js/audio-processor.js').then(() => {
             const mediaStreamSource = audioContext.createMediaStreamSource(stream);
             audioWorkletNode = new AudioWorkletNode(audioContext, 'audio-processor');
 
@@ -107,11 +107,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateUIForRecording(isRecordingNow) {
     const recordButton = document.getElementById('recordButton');
+    const imgElement = recordButton.querySelector('img');
+
     if (isRecordingNow) {
-        recordButton.innerText = 'Stop Recording';
+        imgElement.src = '../Images/live-button-img.png';
+        imgElement.alt = 'Stop Recording';
         isRecording = true;
     } else {
-        recordButton.innerText = 'Start Recording';
+        imgElement.src = '../Images/record-button-img.jpg';
+        imgElement.alt = 'Start Recording';
         isRecording = false;
     }
     }
