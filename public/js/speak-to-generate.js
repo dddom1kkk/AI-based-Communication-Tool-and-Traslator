@@ -1,86 +1,116 @@
+const socket = io.connect('https://big-smart-society.glitch.me');
 
-let SpeechRecognition;
-let isListening;
+socket.on('transcription', (transcribedText) => {
+    document.getElementById('textOutput').innerText = transcribedText;
+});
 
-function startSpeechRecognition () {
-    console.log("Active");
-    isListening = true;
-   }
+socket.on('transcriptionError', (error) => {
+    console.error('Transcription error:', error);
+    document.getElementById('fromInput')[0].innerText = 'Error: ' + error.message;
+});
 
-function endSpeechRecognition () {
-    console.log("Ended");
-    isListening = false;
+let audioContext;
+let mediaStream;
+let isRecording = false;
+let audioWorkletNode;
+let audioDataBuffer = [];
+
+document.getElementById('recordButton').addEventListener('click', toggleRecording);
+
+function toggleRecording() {
+  if (isRecording) {
+    stopRecording();
+  } else {
+    startRecording();
+  }
 }
 
-function resultOfSpeechRecognition (event) {
+function startRecording() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert('Your browser does not support audio input');
+    return;
+  }
 
-    // This takes the results that speech recognition event gives and
-    // shows it in the input text as the user is saying words.
-    let transcript = Array.from(event.results)
-    .map(result => result[0])
-    .map(result => result.transcript)
-    .join('');
-    let inputTextBox = document.getElementById("fromInput");
-    inputTextBox.value = transcript;
+  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    .then(stream => {
+      audioContext = new AudioContext();
+      mediaStream = stream;
+
+      audioContext.audioWorklet.addModule('audio-processor.js').then(() => {
+          const mediaStreamSource = audioContext.createMediaStreamSource(stream);
+          audioWorkletNode = new AudioWorkletNode(audioContext, 'audio-processor');
+
+          mediaStreamSource.connect(audioWorkletNode);
+
+          audioWorkletNode.port.onmessage = (event) => {
+            processAudio(event.data);
+          };
+
+          updateUIForRecording(true);
+      });
+  })
+  .catch(error => {
+      console.error('Error accessing media devices.', error);
+  });
 }
 
-// Check if the browser supports speech recognition.    
-if (isSpeechRecognitionSupported()) {
-   SpeechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); 
-   inputTextBox = document.getElementById("fromInput");
+function stopRecording() {
 
-   SpeechRecognition.interimResults = true;
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop());
+  }
+  if (audioContext) {
+    audioContext.close();
+  }
+  if (audioWorkletNode) {
+    audioWorkletNode.disconnect();
+  }
 
-   SpeechRecognition.onstart = startSpeechRecognition;
+  if (audioDataBuffer.length > 0) {
+      const combinedData = combineAudioData(audioDataBuffer);
+      const convertedData = convertTo16BitPCM(combinedData);
+      socket.emit('audioData', convertedData);
+      audioDataBuffer = [];
+  }
 
-   SpeechRecognition.onend = endSpeechRecognition;
-
-   SpeechRecognition.onresult = resultOfSpeechRecognition;
-
-    
-} else {
-    alert("Sorry, your browser does not support speech recognition.")
+  updateUIForRecording(false);
 }
 
-function listenText() {
-    if (!isListening) {
-        // Start listening to speech. 
-        let fromLang = document.getElementById("fromLanguage").value;
-        if (fromLang == "Detect Language") {
-            SpeechRecognition.lang = "en-US";
-        }
-        else {
-            SpeechRecognition.lang = fromLang;
-        }
+function processAudio(audioData) {
 
-        SpeechRecognition.start();
-
-    } else {
-        // Stop listening to speech.
-        SpeechRecognition.stop();
-    }
-
-}
-
-/**
- * Checks if speech recognition is supported by the browser or not. 
- */
-function isSpeechRecognitionSupported() {
-    const SpeechRecognition = window.speechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognition) {
-        return true;
-    } else {
-        return false;
-    }
+  audioDataBuffer.push(new Float32Array(audioData));
 
 }
 
-function listenPlayPause() {
-    let translatedText = document.getElementById("toOutput").value;
-    let rateOfSpeech = document.getElementById("rate").value;
-    const utterance = new SpeechSynthesisUtterance(translatedText);
-    utterance.lang = document.getElementById("toLanguage").value;
-    utterance.rate = rateOfSpeech;
+function combineAudioData(bufferArray) {
 
-    window.speechSynthesis.speak(utterance);
+  let totalLength = bufferArray.reduce((acc, val) => acc + val.length, 0);
+  let result = new Float32Array(totalLength);
+  let offset = 0;
+  for (let data of bufferArray) {
+      result.set(data, offset);
+      offset += data.length;
+  }
+  return result;
+
+}
+
+function convertTo16BitPCM(float32Array) {
+  let pcmData = new Int16Array(float32Array.length);
+  for (let i = 0; i < float32Array.length; i++) {
+      const s = Math.max(-1, Math.min(1, float32Array[i]));
+      pcmData[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+  }
+  return pcmData.buffer;
+}
+
+function updateUIForRecording(isRecordingNow) {
+  const recordButton = document.getElementById('recordButton');
+  if (isRecordingNow) {
+    recordButton.innerText = 'Stop Recording';
+    isRecording = true;
+  } else {
+    recordButton.innerText = 'Start Recording';
+    isRecording = false;
+  }
 }
