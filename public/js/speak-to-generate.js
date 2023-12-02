@@ -6,7 +6,7 @@ socket.on('transcription', (transcribedText) => {
 
 socket.on('transcriptionError', (error) => {
     console.error('Transcription error:', error);
-    document.getElementById('fromInput')[0].innerText = 'Error: ' + error.message;
+    document.getElementById('fromInput').innerText = 'Error: ' + error.message;
 });
 
 let audioContext;
