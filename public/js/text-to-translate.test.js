@@ -81,8 +81,8 @@ test('integration test for testing the translation function.', async () => {
     }
 });
 
-// Integration test 1.1 - This tests Translation function if you give the same language
-test('integration test that checks if from and to languages are the same.', async () => {
+// Integration test 2 - This tests the summarization feature
+test('integration test that checks the correct summarization is provided when getTranslation is called', async () => {
     try {
         const response = await getTranslation("English", "English", "Hey, how are you?");
         expect(response).toBe('Please pick from language that is different from the language you want to translate to.');
