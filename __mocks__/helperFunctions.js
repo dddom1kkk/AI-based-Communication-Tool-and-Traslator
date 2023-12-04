@@ -1,5 +1,5 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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";
+const apiKey = "";
 previousFromLanguage = "English";
 previousToLanguage = "French";
 previousUserInput = "";
