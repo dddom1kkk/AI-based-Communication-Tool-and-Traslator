@@ -101,11 +101,6 @@ function translateText() {
   const toLanguage = document.getElementById("toLanguage").value;
   const userInput = document.getElementById("fromInput").value;
 
-  // TODO: Check if the from language is different from toLanguage.
-  // TODO: Check if the userInput is valid (non-empty, valid language)
-  // TODO: Check if the userInput is the same as last time. DO not allow user to do this.
-  // TODO: Add a reset function that resets all the variables if the text is not the same.
-
   // Gets the translatedText from chatGPT using openAI API
   translatedText = getTranslation(fromLanguage, toLanguage, userInput);
 
@@ -248,6 +243,13 @@ function areLanguagesSame(fromLanguage, toLanguage) {
   return false;
 }
 
+/**
+ * 
+ * @param {String} userInput 
+ * @param {String} fromLanguage 
+ * @param {String} toLanguage 
+ * @returns 
+ */
 function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
   if (
     userInput == previousUserInput &&
