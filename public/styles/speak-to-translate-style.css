@@ -66,6 +66,10 @@ body, html {
   .app-buttons:hover {
     background-color: #0056b3;
   }
+
+  .error-text {
+    margin-bottom: 15px;
+  }
   
   .button-section {
     display: flex;
@@ -73,6 +77,12 @@ body, html {
   }
 
   .record-button {
+    padding: 0;
+    border: none;
+    background: none;
+  }
+
+  .pause-button {
     padding: 0;
     border: none;
     background: none;

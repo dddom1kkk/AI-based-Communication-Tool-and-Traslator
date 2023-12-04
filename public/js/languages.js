@@ -4,7 +4,10 @@ function createOptionsForLanguagesDropdown() {
 
   if (rate) {
     rate.addEventListener("input", (event) => {
-      rateText.innerHTML = "Speed(" + event.target.value + ")";
+      if (event.target.value == 1)
+      rateText.innerHTML = "Speed 1x (Normal) :";
+
+      rateText.innerHTML = "Speed " + event.target.value + "x :";
     });
   }
 

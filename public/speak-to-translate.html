@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css" />
     <link rel="icon" href="./favicon.png" type="image/x-icon" />
     <script src="https://big-smart-society.glitch.me/socket.io/socket.io.js"></script>
-    <script src="./js/languages.js"></script>
+    <script src="./js/speechLanguages.js"></script>
     <script src="./js/text-to-translate.js"></script>
     <script src="./js/speak-to-generate.js"></script>
   </head>
@@ -54,7 +54,7 @@
       <div class="language-selection-section">
         <div class="language-selection">
           <select id="fromLanguage" class="language-dropdown">
-            <option value="Detect Language">Detect Language</option>
+            <!-- <option value="Choose Language">Choose Language</option> -->
           </select>
           <span class="language-arrow">⟶</span>
           <select id="toLanguage" class="language-dropdown"></select>
@@ -68,6 +68,8 @@
           placeholder="Type here"
         ></textarea>
 
+        <div id="errorText" class="error-text" style="color: red"></div>
+
         <div class="center-record-img">
           <button class="record-button" id="recordButton">
             <img
@@ -75,15 +77,12 @@
               alt="record-button-image"
             />
           </button>
-          <button
-            id="play-pause-button"
-            onclick="listenPlayPause()"
-            disabled="true"
-          >
+          <button class="pause-button" id="playPauseButton">
             <img src="../Images/play-icon.png" alt="play-button-image" />
           </button>
+          <audio id="audioPlayer" controls style="display: none"></audio>
           <div id="rate-control">
-            <label id="rate-text">Speed(1):</label>
+            <label id="rate-text">Speed 1x (Normal) :</label>
             <input
               type="range"
               min="0.5"
