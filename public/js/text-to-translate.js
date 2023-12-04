@@ -9,7 +9,7 @@ let translatedText = "";
 let summarrizedText;
 
 const translatedTextWithDetect =
-  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [from_language, translation]. Do not show the romanized version. and make sure the first letter of language is capitalized.";
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [from_language's language code-region code, translation]. Do not show the romanized version. and make sure the first letter of language is capitalized. If the language is en make it en-US";
 
 let hasBeenSummarized = false;
 
