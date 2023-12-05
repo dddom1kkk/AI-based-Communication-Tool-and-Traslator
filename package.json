@@ -19,6 +19,7 @@
     "watch-templates": "npm run templates -- --watch",
     "watch-css": "npm run css-compile -- --watch",
     "test": "jest",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "jest": {
