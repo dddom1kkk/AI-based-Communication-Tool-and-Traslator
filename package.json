@@ -18,8 +18,7 @@
     "watch": "npm-run-all build --parallel watch-templates watch-css browsersync",
     "watch-templates": "npm run templates -- --watch",
     "watch-css": "npm run css-compile -- --watch",
-    "test": "jest",
-    "deploy": "gh-pages -d build"
+    "test": "jest"
   },
   "jest": {
     "testEnvironment": "jsdom"
@@ -37,7 +36,6 @@
     "browser-sync": "^2.24.7",
     "clean-css-cli": "^4.2.1",
     "cpx": "^1.5.0",
-    "gh-pages": "^6.1.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^23.0.0",
