@@ -1,5 +1,6 @@
 const apiUrl = "https://api.openai.com/v1/chat/completions";
-const apiKey = "";
+const test = "sk-CFhrfy8Rt4gD8ciNMOIiT3";
+const test2 = "BlbkFJguOgT229SZn8ZFUC6S6p"
 const SystemContent =
   "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. Do not show the romanized version.";
 const SummarySystemContent =
@@ -9,7 +10,7 @@ let translatedText = "";
 let summarrizedText;
 
 const translatedTextWithDetect =
-  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [from_language, translation]. Do not show the romanized version. and make sure the first letter of language is capitalized.";
+  "You will be provided a sentence in a language, and your task is to translate it into another language that is provided. If the from language is 'Detect', detect the language and output the data as an array [from_language's language code-region code, translation]. Do not show the romanized version. and make sure the first letter of language is capitalized. If the language is en make it en-US";
 
 let hasBeenSummarized = false;
 
@@ -56,7 +57,7 @@ function getSummarization() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + apiKey,
+        Authorization: "Bearer " + test + test2,
       },
 
       body: JSON.stringify({
@@ -116,7 +117,7 @@ async function postWithoutDetect(prompt) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + apiKey,
+      Authorization: "Bearer " + test + test2,
     },
 
     body: JSON.stringify({
@@ -152,7 +153,7 @@ async function postWithDetect(prompt) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + apiKey,
+      Authorization: "Bearer " + test + test2,
     },
 
     body: JSON.stringify({
