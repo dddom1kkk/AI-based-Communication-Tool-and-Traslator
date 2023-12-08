@@ -14,6 +14,8 @@
 
 Website: https://dddom1kkk.github.io/AI-based-Communication-Tool-and-Traslator/
 
+[Report_2_pdf](./Milestone_2/CMPT276_Report2.pdf)
+
 [AI_Declaration_Victor_Nguyen](./Milestone_2/P2_AI_Declaration_Victor_Nguyen_301458739.pdf)
 
 [AI_Declaration_Tegvaran_Sooch](./Milestone_2/P2_AI_Declaration_Tegvaran_Sooch_301418178.pdf)
