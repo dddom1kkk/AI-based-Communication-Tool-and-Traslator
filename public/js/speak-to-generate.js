@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const socket = io.connect('https://big-smart-society.glitch.me');
+    const socket = io.connect('https://southern-shared-inspiration.glitch.me');
 
-    // Capture actual text from server that was recognized from speech
     socket.on('transcription', (transcribedText) => {
 
         document.getElementById('fromInput').value = transcribedText;
 
     });
 
-    // Capture error response from the server in case of Speech convertion error
     socket.on('transcriptionError', (error) => {
 
         console.error('Transcription error:', error);
@@ -25,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isAudioPlaying = false;
     const audioPlayer = document.getElementById("audioPlayer");
     const playPauseButton = document.getElementById("playPauseButton");
+    const errorText = document.getElementById('errorText');
 
     playPauseButton.addEventListener('click', toggleListening);
     document.getElementById("recordButton").addEventListener('click', toggleRecording);
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleListening() {
 
         const textArea = document.getElementById('toOutput');
-        const errorText = document.getElementById('errorText');
 
         if (textArea.value.trim() === "") {
             errorText.textContent = 'Please translate something first!';
@@ -111,12 +109,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (audioDataBuffer.length > 0) {
+
             const combinedData = combineAudioData(audioDataBuffer);
             const convertedData = convertTo16BitPCM(combinedData);
             const selectedLanguage = document.getElementById('fromLanguage').value;
             socket.emit('audioData', convertedData, selectedLanguage);
             audioDataBuffer = [];
-        }
+        } else
+            errorText.textContent = 'No speech was captured!';
 
         updateUIForRecording(false);
 
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const playbackSpeed = document.getElementById("rate").value;
         const selectedVoice = document.getElementById("toLanguage").value;
     
-        fetch(`https://big-smart-society.glitch.me/synthesize`, {
+        fetch(`https://southern-shared-inspiration.glitch.me/synthesize`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: textToSynthesize, voice: selectedVoice })

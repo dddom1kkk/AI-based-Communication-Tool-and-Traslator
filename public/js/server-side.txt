@@ -1,0 +1,87 @@
+
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const cors = require('cors');
+
+const app = express();
+app.use(cors({
+  origin: 'https://dddom1kkk.github.io' 
+}));
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: 'https://dddom1kkk.github.io',
+    methods: ["GET", "POST"]
+  }
+});
+
+const speechToText = new SpeechToTextV1({
+  authenticator: new IamAuthenticator ({ apikey: process.env.STT_API_KEY }),
+  serviceUrl: process.env.STT_URL
+});
+const textToSpeech = new TextToSpeechV1({
+  authenticator: new IamAuthenticator ({ apikey: process.env.TTS_API_KEY }),
+  serviceUrl: process.env.TTS_URL
+});
+
+app.get('/test', (req, res) => {
+  res.send('Server is working!');
+});
+
+app.get('/', (req, res) => {
+  res.send('Start is working!');
+});
+
+io.on('connection', (socket) => {
+  socket.on('audioData', (audioData, languageModel) => {
+
+    const buffer = Buffer.from(audioData);
+
+    const recognizeParams = {
+        audio: buffer,
+        contentType: 'audio/l16; rate=44100; endianness=little-endian',
+        model: languageModel,
+    };
+
+    speechToText.recognize(recognizeParams)
+        .then(speechRecognitionResults => {
+            if (speechRecognitionResults.result.results.length > 0) {
+                const transcription = speechRecognitionResults.result.results[0].alternatives[0].transcript;
+                socket.emit('transcription', transcription);
+            }
+        })
+        .catch(err => {
+        console.error(err);
+        socket.emit('transcriptionError', err);
+        });
+    
+  });
+});
+
+app.post('/synthesize', express.json(), (req, res) => {
+  const { text, voice } = req.body;
+  const synthesizeParams = {
+    text: text,
+    accept: 'audio/wav',
+    voice: voice,
+  };
+
+  textToSpeech.synthesize(synthesizeParams)
+    .then(response => {
+      res.setHeader('Content-Type', 'audio/wav');
+      response.result.pipe(res);
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      res.status(err.code || 500).send(err);
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
