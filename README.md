@@ -18,6 +18,6 @@ Website: https://dddom1kkk.github.io/AI-based-Communication-Tool-and-Traslator/
 
 [AI_Declaration_Tegvaran_Sooch](./Milestone_2/P2_AI_Declaration_Tegvaran_Sooch_301418178.pdf)
 
-[AI_Declaration_Damir_Zharikessov]()
+[AI_Declaration_Damir_Zharikessov](./Milestone_2/P2_AI_Declaration_Damir_Zharikessov_301541028.pdf)
 
-[AI_Declaration_Zheyuan_Ou]()
+[AI_Declaration_Zheyuan_Ou](/Milestone_2/P2_AI_Declaration_Zheyuan_Ou_301464403.pdf)
