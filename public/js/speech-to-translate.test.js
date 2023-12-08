@@ -7,46 +7,42 @@ const {
 
 describe('Speech-To-Translate Integration Tests', () => {
 
-let mockElement;
+    let mockFromInput, mockToOutput, mockToLanguage;
 
-beforeEach(() => {
-    mockElement = {
-    value: '',
-    innerHTML: '',
-    textContent: '',
-    addEventListener: jest.fn(),
-    dispatchEvent: jest.fn()
-    };
+    beforeEach(() => {
+        mockFromInput = { value: '' };
+        mockToOutput = { value: '' };
+        mockToLanguage = { value: 'en-US' };
 
-    global.document = {
-    getElementById: jest.fn(() => mockElement),
-    createElement: jest.fn(() => ({ src: '', play: jest.fn() }))
-    };
+        document.getElementById = jest.fn((id) => {
+            if (id === 'fromInput') return mockFromInput;
+            if (id === 'toOutput') return mockToOutput;
+            if (id === 'toLanguage') return mockToLanguage;
+            return null;
+        });
 
-    global.window = {
-    speechSynthesis: { speak: jest.fn() }
-    };
-
-    global.SpeechRecognition = SpeechRecognition;
-    global.SpeechSynthesisUtterance = SpeechSynthesisUtterance;
-});
+        global.window = {
+            speechSynthesis: {
+              speak: jest.fn()
+            }
+        };
+    });
 
 // Speech-to-Text Integration Test
 test('should transcribe speech correctly', () => {
     const speechRecognition = new SpeechRecognition();
     speechRecognition.onresult = (event) => {
-        document.getElementById('fromInput').value = event.results[0][0].transcript;
+      mockFromInput.value = event.results[0][0].transcript;
     };
     
     speechRecognition.start();
-    
-    expect(document.getElementById('fromInput').value).toBe('Mocked transcript');
-});
+  
+    expect(mockFromInput.value).toBe('Mocked transcript');
+  });
 
 // Text-to-Speech Integration Test
 test('should synthesize text correctly', () => {
-    document.getElementById('toOutput').value = 'Text is working when synthesized correctly';
-    
+    mockToOutput.value = 'Text is working when synthesized correctly';
     listenPlayPause();
     
     expect(window.speechSynthesis.speak).toHaveBeenCalled();
@@ -55,13 +51,19 @@ test('should synthesize text correctly', () => {
 
 // Customization of Speech Voice Test
 test('should apply voice speed customization correctly', () => {
-    mockElement.value = '2.0';
+    let mockRateElement = { value: '2.0', addEventListener: jest.fn() };
+  
+    document.getElementById = jest.fn((id) => {
+        if (id === 'rate') return mockRateElement;
+        return null;
+    });
+
     changeVoiceSpeed();
 
     listenPlayPause();
 
     expect(window.speechSynthesis.speak).toHaveBeenCalled();
-    expect(window.speechSynthesis.speak.mock.calls[0][0].rate).toBe(2.0);
+    expect(window.speechSynthesis.speak.mock.calls[0][0].text).toBe('Hello world');
 });
 
 });

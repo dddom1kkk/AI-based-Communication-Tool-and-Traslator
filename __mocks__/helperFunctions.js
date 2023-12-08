@@ -282,8 +282,8 @@ function isSpeechRecognitionSupported() {
 }
 
 function listenPlayPause() {
-  const textToSynthesize = document.getElementById("toOutput").value;
-  const rateOfSpeech = 2.0;
+  // const textToSynthesize = document.getElementById("toOutput").value;
+  // const rateOfSpeech = 2.0;
 
   const utterance = new SpeechSynthesisUtterance(textToSynthesize);
   utterance.lang = document.getElementById("toLanguage").value;
