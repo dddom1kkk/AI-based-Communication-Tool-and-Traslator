@@ -28,7 +28,6 @@ function isEmpty(userInput) {
     return false;
   }
 }
-}
 
 /**
  * Checks if the language the user wants to translate from and the language the
@@ -43,7 +42,6 @@ function areLanguagesSame(fromLanguage, toLanguage) {
   }
   return false;
 }
-}
 
 function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
   if (
@@ -54,7 +52,6 @@ function isUserInputTheSame(userInput, fromLanguage, toLanguage) {
     return true;
   }
   return false;
-}
 }
 
 /**
@@ -124,7 +121,6 @@ function getSummarization(text) {
       });
   }
   }
-}
 
 /**
  *
@@ -139,16 +135,12 @@ function showTranslatedText(translatedText) {
 
 async function postWithoutDetect(prompt) {
   return Promise.resolve("Hey comment allez-vous?");
-  return Promise.resolve("Hey comment allez-vous?");
 }
 
 async function postWithDetect(prompt) {
   // Array with first element being the detected language and second being the translation.
   let translation = ["English", "Hey comment allez-vous?"];
-  // Array with first element being the detected language and second being the translation.
-  let translation = ["English", "Hey comment allez-vous?"];
   return Promise.resolve(translation);
-}
 }
 
 /**
@@ -159,16 +151,13 @@ async function postWithDetect(prompt) {
 function isValidInput(userInput, fromLanguage, toLanguage) {
   if (isEmpty(userInput) == true) {
     return "The text you want to translate can not be empty.";
-    return "The text you want to translate can not be empty.";
     //return false;
   }
   if (areLanguagesSame(fromLanguage, toLanguage) == true) {
     return "Please pick from language that is different from the language you want to translate to.";
-    return "Please pick from language that is different from the language you want to translate to.";
     //return false;
   }
   if (isUserInputTheSame(userInput, fromLanguage, toLanguage) == true) {
-    return "Please ensure that the text you want translated is different from your last.";
     return "Please ensure that the text you want translated is different from your last.";
     //return false;
   }
